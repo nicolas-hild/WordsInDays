@@ -8,6 +8,8 @@ class AnswersController < ApplicationController
 
   def create
     @answer = Answer.new(answer_params)
+    @answer.word_id = @answer.word_id.to_i
+    @word = Word.find(@answer.word_id)
     if @answer.save
       respond_to do |format|
         format.html { redirect_to word_path(@word) }
@@ -24,10 +26,6 @@ class AnswersController < ApplicationController
   private
 
   def answer_params
-    params.require(:answer).permit(:user_description, :word)
-  end
-
-  def set_word
-    @word = Word.find(params[:word_id])
+    params.require(:answer).permit(:user_definition, :word_id)
   end
 end

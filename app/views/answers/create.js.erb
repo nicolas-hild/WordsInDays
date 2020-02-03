@@ -18,7 +18,6 @@ const displayInfos = () => {
   refreshForm('<%= j render "answers/new_form", word: @word, answer: @answer %>');
 <% else %>
   console.log('titi')
-  refreshForm('<%= j render "answers/new_form", word: @word, answer: @answer %>');
   hideForm();
   displayInfos();
 <% end %>
