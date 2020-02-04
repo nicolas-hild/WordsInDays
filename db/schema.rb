@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 2020_01_31_141602) do
     t.string "name"
     t.string "definition"
     t.string "citations"
-    t.date "day", default: "2020-02-03"
+    t.date "day", default: "2020-02-04"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

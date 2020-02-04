@@ -20,7 +20,7 @@
       <p>Cool n'est-ce pas ?</p>
     </div>
 
-    <% if @citations != [] %>
+    <% unless @citations.nil? %>
       <div class="citations">
         <p>Maintenant on va voir différentes utilisations pour le mot <%= @word.name %> !</p>
         <ul>

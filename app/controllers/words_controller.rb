@@ -7,7 +7,7 @@ class WordsController < ApplicationController
   API_TOKEN = "DAW-BCQiRCxAuIThWZppqUehpIq1OFdx"
 
   def show
-    @citations = @word.citations.split(" - ")
+    @citations = @word.citations.split(" - ") unless @word.citations.nil?
     @answer = Answer.new
   end
 
@@ -17,11 +17,20 @@ class WordsController < ApplicationController
   end
 
   def create
-    @word.name = new_word[0].mot
-    @word.definition = word_definition(word)[0].definition
-    @word.citations = word_citations(word)[0].citation + " - " + word_citations(word)[1].citation + " - " + word_citations(word)[2].citation + " - " + word_citations(word)[3].citation + " - " + word_citations(word)[4].citation
+    @word.name = new_word[0]["mot"]
+    word_to_use = remove_accents(@word.name)
+    definition = word_definition(word_to_use)
+    if definition.length == 1
+      new
+    else
+      @word.definition = definition[0]["definition"]
+    end
+    citations = word_citations(word_to_use)
+    unless citations.length == 1
+      @word.citations = ""
+      citations.each { |citation| citation == citations[0] ? @word.citations += citation["citation"] : @word.citations += " - #{citation["citation"]}" }
+    end
     @word.save
-    redirect_to :show
   end
 
   private
@@ -32,9 +41,11 @@ class WordsController < ApplicationController
 
   def new_word_needed
     word = last_word
-    return if word.day == Date.today
-
-    new
+    if word.day == Date.today && !Word.last.nil?
+      return
+    else
+      new
+    end
   end
 
   def new_word
@@ -53,5 +64,28 @@ class WordsController < ApplicationController
     url = "https://api.dicolink.com/v1/mot/#{word}/citations?limite=5&api_key=#{API_TOKEN}"
     citations_request = open(url).read
     return JSON.parse(citations_request)
+  end
+
+  def remove_accents(word)
+    french_accents = {
+      ['á','à','â','ä','ã'] => 'a',
+      ['Ã','Ä','Â','À'] => 'A',
+      ['é','è','ê','ë'] => 'e',
+      ['Ë','É','È','Ê'] => 'E',
+      ['í','ì','î','ï'] => 'i',
+      ['Î','Ì'] => 'I',
+      ['ó','ò','ô','ö','õ'] => 'o',
+      ['Õ','Ö','Ô','Ò','Ó'] => 'O',
+      ['ú','ù','û','ü'] => 'u',
+      ['Ú','Û','Ù','Ü'] => 'U',
+      ['ç'] => 'c', ['Ç'] => 'C',
+      ['ñ'] => 'n', ['Ñ'] => 'N'
+    }
+    french_accents.each do |accents, letter|
+      accents.each do |accent|
+        word = word.gsub(accent, letter)
+      end
+    end
+    return word
   end
 end
