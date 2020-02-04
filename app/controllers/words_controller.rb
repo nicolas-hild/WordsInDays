@@ -41,11 +41,9 @@ class WordsController < ApplicationController
 
   def new_word_needed
     word = last_word
-    if word.day == Date.today && !Word.last.nil?
-      return
-    else
-      new
-    end
+    return if !word.nil? && word.day == Date.today
+
+    new
   end
 
   def new_word
