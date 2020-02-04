@@ -1,0 +1,23 @@
+const refreshForm = (innerHTML) => {
+  const form = document.getElementById('new-answer-form');
+  form.innerHTML = innerHTML;
+}
+
+const hideForm = () => {
+  const form = document.getElementById('quizz')
+  form.style.display = 'none';
+}
+
+const displayInfos = () => {
+  const infos = document.getElementById('word-informations')
+  infos.style.display = 'block';
+}
+
+<% if @answer.errors.any? %>
+  console.log('toto')
+  refreshForm('<%= j render "answers/new_form", word: @word, answer: @answer %>');
+<% else %>
+  console.log('titi')
+  hideForm();
+  displayInfos();
+<% end %>

@@ -1,0 +1,5 @@
+<%= simple_form_for([word, answer], remote: true) do |f| %>
+  <%= f.input :user_definition, as: :text, :input_html => { :rows => 2 } %>
+  <%= f.input :word_id, :as => :hidden, :input_html => { :value => word.id } %>
+  <%= f.submit "Soumettre ma définition", class: "form-control" %>
+<% end %>

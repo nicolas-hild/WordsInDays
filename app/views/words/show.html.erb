@@ -1,2 +1,35 @@
-<h1>Words#show</h1>
-<p>Find me in app/views/words/show.html.erb</p>
+<div class="container-nico">
+  <div class="word-intro text-center">
+    <h2>Le mot du jour est :</h2>
+    <h2 id="word"><%= @word.name.capitalize %></h2>
+  </div>
+
+  <div id="quizz">
+    <p>Quelle est la définition du mot <%= @word.name %> ?</p>
+    <div id="new-answer-form">
+      <%= render "answers/new_form", word: @word, answer: @answer %>
+    </div>
+  </div>
+
+  <div id="word-informations">
+    <p>Cool, merci pour ta réponse !</p>
+
+    <div class="definition">
+      <p>Voici la définition du Larousse pour "<%= @word.name %>" :</p>
+      <p><%= @word.definition %></p>
+      <p>Cool n'est-ce pas ?</p>
+    </div>
+
+    <% unless @citations.nil? %>
+      <div class="citations">
+        <p>Maintenant on va voir différentes utilisations pour le mot <%= @word.name %> !</p>
+        <ul>
+          <% @citations.each do |citation| %>
+            <li><%= citation %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+  </div>
+</div>
