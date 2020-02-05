@@ -1,13 +1,16 @@
 <div class="container-nico">
-  <div id="dayly-word" class="word-intro text-center">
-    <h4>Le mot du jour est :</h4>
-    <h2 id="word"><%= @word.name.capitalize %></h2>
+  <div class="row">
+    <div id="dayly-word" class="col-xs-12 col-md-8 col-lg-4 word-intro text-center">
+      <h4>Le mot du jour est :</h4>
+      <h2 id="word"><%= @word.name.capitalize %></h2>
+    </div>
   </div>
-
-  <div id="quizz">
-    <p>Quelle est la définition du mot <%= @word.name %> ?</p>
-    <div id="new-answer-form">
-      <%= render "answers/new_form", word: @word, answer: @answer %>
+  <div class="row">
+    <div id="quizz" class="col-xs-12 col-md-8 col-lg-6">
+      <p>Quelle est la définition du mot <%= @word.name %> ?</p>
+      <div id="new-answer-form">
+        <%= render "answers/new_form", word: @word, answer: @answer %>
+      </div>
     </div>
   </div>
 
@@ -19,22 +22,21 @@
 
         <div class="col-12">
           <div class="definition">
-            <p>Voici la définition du Larousse pour "<%= @word.name %>" :</p>
+            <p class="part-title">Voici la définition du Larousse pour "<%= @word.name %>" :</p>
             <p><%= @word.definition %></p>
-            <p>Cool n'est-ce pas ?</p>
           </div>
         </div>
 
       <% else %>
 
-        <div class="col-6">
+        <div class="col-xs-12 col-lg-6">
           <div class="definition">
             <p class="part-title">Voici la définition du Larousse pour "<%= @word.name %>" :</p>
             <p><%= @word.definition %></p>
           </div>
         </div>
 
-        <div class="col-6">
+        <div class="col-xs-12 col-lg-6">
           <div class="citations">
             <p class="part-title text-center">Maintenant on va voir différentes utilisations pour le mot "<%= @word.name %>" !</p>
             <% @citations.each_with_index do |citation, index| %>
