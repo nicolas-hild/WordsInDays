@@ -1,7 +1,32 @@
 #word-informations {
   display: none;
+  margin-top: 50px;
+  h5 {
+    text-align: center;
+  }
 }
 
 #quizz {
   display: block;
+}
+
+.definition, .citations {
+  margin-top: 50px;
+  width: 100%;
+  padding: 20px;
+  // border-radius: 10px;
+  // border: 1px solid white;
+  height: 300px;
+}
+
+.part-title {
+  font-weight: bold;
+}
+
+.citation {
+  font-style: italic;
+}
+
+.definition {
+  text-align: center;
 }

@@ -30,6 +30,7 @@ class WordsController < ApplicationController
       @word.citations = ""
       citations.each { |citation| citation == citations[0] ? @word.citations += citation["citation"] : @word.citations += " - #{citation["citation"]}" }
     end
+    @word.day = Date.today
     @word.save
   end
 
