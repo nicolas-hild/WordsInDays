@@ -1,6 +1,6 @@
 <div class="container-nico">
-  <div class="word-intro text-center">
-    <h2>Le mot du jour est :</h2>
+  <div id="dayly-word" class="word-intro text-center">
+    <h4>Le mot du jour est :</h4>
     <h2 id="word"><%= @word.name.capitalize %></h2>
   </div>
 
@@ -12,24 +12,43 @@
   </div>
 
   <div id="word-informations">
-    <p>Cool, merci pour ta réponse !</p>
+    <h5>Merci pour ta participation ! Regardons maintenant les infos récoltées par nos experts sur le mot "<%= @word.name %>" :</h5>
 
-    <div class="definition">
-      <p>Voici la définition du Larousse pour "<%= @word.name %>" :</p>
-      <p><%= @word.definition %></p>
-      <p>Cool n'est-ce pas ?</p>
+    <div class="row">
+      <% if @citations.nil? %>
+
+        <div class="col-12">
+          <div class="definition">
+            <p>Voici la définition du Larousse pour "<%= @word.name %>" :</p>
+            <p><%= @word.definition %></p>
+            <p>Cool n'est-ce pas ?</p>
+          </div>
+        </div>
+
+      <% else %>
+
+        <div class="col-6">
+          <div class="definition">
+            <p class="part-title">Voici la définition du Larousse pour "<%= @word.name %>" :</p>
+            <p><%= @word.definition %></p>
+          </div>
+        </div>
+
+        <div class="col-6">
+          <div class="citations">
+            <p class="part-title text-center">Maintenant on va voir différentes utilisations pour le mot "<%= @word.name %>" !</p>
+            <% @citations.each_with_index do |citation, index| %>
+              <% if index.odd? %>
+                <p class="text-right citation"><%= citation %></p>
+              <% else %>
+                <p class="citation"><%= citation %></p>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+
+      <% end %>
     </div>
-
-    <% unless @citations.nil? %>
-      <div class="citations">
-        <p>Maintenant on va voir différentes utilisations pour le mot <%= @word.name %> !</p>
-        <ul>
-          <% @citations.each do |citation| %>
-            <li><%= citation %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
 
   </div>
 </div>
